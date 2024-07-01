@@ -1,9 +1,9 @@
-package practice.board_mybatis.entity;
+package practice.board.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "board_jpa")
+@Table(name = "board_jpa_new")
 public class BoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

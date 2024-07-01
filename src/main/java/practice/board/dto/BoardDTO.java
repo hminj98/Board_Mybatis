@@ -1,4 +1,4 @@
-package practice.board_mybatis.dto;
+package practice.board.dto;
 
 import lombok.Getter;
 import lombok.Setter;

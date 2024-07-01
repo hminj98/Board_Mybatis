@@ -1,4 +1,4 @@
-package practice.board_mybatis.controller;
+package practice.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

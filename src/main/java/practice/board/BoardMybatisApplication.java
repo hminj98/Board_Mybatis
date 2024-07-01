@@ -1,4 +1,4 @@
-package practice.board_mybatis;
+package practice.board;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
