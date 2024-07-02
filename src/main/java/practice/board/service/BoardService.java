@@ -23,4 +23,11 @@ public class BoardService {
         return boardMapper.findAll();
     }
 
+    public void updateHits(Long id){
+        boardMapper.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        return boardMapper.findById(id);
+    }
 }

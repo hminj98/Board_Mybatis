@@ -13,4 +13,8 @@ public interface BoardMapper {
     public void list();
 
     List<BoardDTO> findAll();
+
+    public void updateHits(Long id);
+
+    BoardDTO findById(Long id);
 }
