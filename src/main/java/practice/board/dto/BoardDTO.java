@@ -3,6 +3,7 @@ package practice.board.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -15,4 +16,6 @@ public class BoardDTO {
     private String boardContents; // 내용
     private int boardHits; // 조회수
     private String createdAt; // 작성일자
+    private int fileAttached; // 파일 첨부 여부
+    private MultipartFile boardFile; // 첨부 파일
 }

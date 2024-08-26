@@ -3,5 +3,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="practice.board.dto.BoardDTO" alias="board"/>
+        <typeAlias type="practice.board.dto.BoardFileDTO" alias="boardFile"/>
     </typeAliases>
 </configuration>

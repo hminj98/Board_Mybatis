@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import practice.board.dto.BoardDTO;
+import practice.board.dto.BoardFileDTO;
 import practice.board.service.BoardService;
 
+import java.io.IOException;
 import java.util.List;
 @Slf4j
 @Controller
@@ -23,9 +25,8 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(BoardDTO boardDTO){
+    public String save(BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
-        log.info("boardDTO: {}", boardDTO);
         return "redirect:/list";
     }
 
@@ -49,9 +50,12 @@ public class BoardController {
     public String findById(@PathVariable("id") Long id , Model model){
         // 조회수 + 1 , id 값으로 조회
         boardService.updateHits(id);
-        BoardDTO findItem = boardService.findById(id);
-        log.info("findById: {}", findItem);
-        model.addAttribute("board", findItem);
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        if(boardDTO.getFileAttached() == 1){
+            BoardFileDTO boardFileDTO = boardService.findFile(id);
+            model.addAttribute("boardFile", boardFileDTO);
+        }
         return "detail";
     }
     // 수정

@@ -2,13 +2,14 @@ package practice.board.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import practice.board.dto.BoardDTO;
+import practice.board.dto.BoardFileDTO;
 
 import java.util.List;
 
 @Mapper
 public interface BoardMapper {
 
-    public void save(BoardDTO boardDTO);
+    BoardDTO save(BoardDTO boardDTO);
 
     public void list();
 
@@ -22,4 +23,7 @@ public interface BoardMapper {
 
     void delete(Long id);
 
+    void saveFile(BoardFileDTO boardFileDTO);
+
+    BoardFileDTO findFIle(Long id);
 }
