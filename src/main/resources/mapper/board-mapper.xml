@@ -13,7 +13,7 @@
                boardWriter,
                boardHits,
                date_format(createdAt, "%Y-%m-%d") as createdAt
-               from board_table order by id desc
+               from board_table
     </select>
 
     <update id = "updateHits" parameterType="Long">
@@ -24,13 +24,25 @@
     <select id = "findById" parameterType="Long">
         select id,
                boardTitle,
+               boardPass,
                boardWriter,
                boardHits,
                createdAt,
                boardContents
         from board_table
         where id = #{id}
-        order by id desc
     </select>
+
+    <update id = "update">
+        update board_table
+        set boardTitle = #{boardTitle},
+           boardContents = #{boardContents}
+        where id = #{id}
+    </update>
+
+    <delete id = "delete">
+        delete from board_table
+        where id = #{id}
+    </delete>
 
 </mapper>
