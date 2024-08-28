@@ -3,8 +3,8 @@
 <mapper namespace="practice.board.mapper.BoardMapper">
 
     <insert id = "save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
-        insert into board_table(boardTitle, boardWriter, boardPass, boardContents)
-        values(#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents})
+        insert into board_table(boardTitle, boardWriter, boardPass, boardContents, fileAttached)
+        values(#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents}, #{fileAttached})
     </insert>
 
     <select id = "findAll" resultType="board">
@@ -28,7 +28,8 @@
                boardWriter,
                boardHits,
                createdAt,
-               boardContents
+               boardContents,
+               fileAttached
         from board_table
         where id = #{id}
     </select>

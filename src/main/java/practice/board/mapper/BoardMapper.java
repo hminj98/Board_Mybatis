@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    BoardDTO save(BoardDTO boardDTO);
+    void save(BoardDTO boardDTO);
 
     public void list();
 
@@ -25,5 +25,5 @@ public interface BoardMapper {
 
     void saveFile(BoardFileDTO boardFileDTO);
 
-    BoardFileDTO findFIle(Long id);
+    List<BoardFileDTO> findFile(Long id);
 }

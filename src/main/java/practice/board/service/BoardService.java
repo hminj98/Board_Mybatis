@@ -19,38 +19,43 @@ public class BoardService {
     private final BoardMapper boardMapper;
 
     public void save(BoardDTO boardDTO) throws IOException {
-        if(boardDTO.getBoardFile().isEmpty()){
+        if(boardDTO.getBoardFile().get(0).isEmpty()){
             // 첨부 파일 없음.
+            boardDTO.setFileAttached(0);
             boardMapper.save(boardDTO);
-        }else{
+        }
+        else{
             // 첨부 파일 있음
             boardDTO.setFileAttached(1);
-
-            // 게시글 저장 후 id값 활용을 위해 리턴
-            BoardDTO saveBoard = boardMapper.save(boardDTO);
+            boardMapper.save(boardDTO);
+            BoardDTO saveBoard = boardMapper.findById(boardDTO.getId());
 
             // 파일만 따로 가져오기
-            MultipartFile boardFile = boardDTO.getBoardFile();
+            for(MultipartFile boardFile : boardDTO.getBoardFile()){
+                log.info("boardFile : " + boardFile);
 
-            // 파일 이름 가져오기
-            String originalFilename = boardFile.getOriginalFilename();
+                // 파일 이름 가져오기
+                String originalFilename = boardFile.getOriginalFilename();
+                log.info("originalFilename : " + originalFilename);
+                // 저장용 이름 만들기(예시)
+                String storedFileName = System.currentTimeMillis() + "-" +originalFilename;
+                log.info("storedFileName : " + storedFileName);
 
-            // 저장용 이름 만들기(예시)
-            String storedFileName = System.currentTimeMillis() + "-" +originalFilename;
+                // BoardDTO 세팅
+                BoardFileDTO boardFileDTO = new BoardFileDTO();
+                boardFileDTO.setOriginalFileName(originalFilename);
+                boardFileDTO.setStoredFileName(storedFileName);
+                boardFileDTO.setBoardId(saveBoard.getId());
 
-            // BoardDTO 세팅
-            BoardFileDTO boardFileDTO = new BoardFileDTO();
-            boardFileDTO.setOriginalFileName(originalFilename);
-            boardFileDTO.setStoredFileName(storedFileName);
-            boardFileDTO.setBoardId(saveBoard.getId());
+                // 파일 저장 경로 설정
+                String savePath = "C:/Users/alswl/Desktop/" + storedFileName;
+                boardFile.transferTo(new File(savePath));
 
-            // 파일 저장 경로 설정
-            String savePath = "C:/Users/alswl/Desktop/" + storedFileName;
-            boardFile.transferTo(new File(savePath));
-
-            // DB 저장
-            boardMapper.saveFile(boardFileDTO);
+                // DB 저장
+                boardMapper.saveFile(boardFileDTO);
+            }
         }
+
     }
 
     public List<BoardDTO> findAll() {
@@ -74,7 +79,7 @@ public class BoardService {
         boardMapper.delete(id);
     }
 
-    public BoardFileDTO findFile(Long id) {
-        return boardMapper.findFIle(id);
+    public List<BoardFileDTO> findFile(Long id) {
+        return boardMapper.findFile(id);
     }
 }
